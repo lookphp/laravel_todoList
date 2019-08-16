@@ -11,6 +11,24 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+use App\Task;
+use Illuminate\Http\Request;
+
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
+//显示所有任务
+Route::get('/',function(){
+    return view('tasks');
+});
+
+//增加新的任务
+Route::post('/task',function(Request $request){
+
+});
+
+//删除一个已有的任务
+Route::delete('/task/{id}',function($id){
+
 });
