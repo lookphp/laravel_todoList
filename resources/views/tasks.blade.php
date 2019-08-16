@@ -38,7 +38,7 @@
             </div>
 
             <!-- Current Tasks -->
-        {{--    @if (count($tasks) > 0)
+            @if (count($tasks) > 0)
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Current Tasks
@@ -62,7 +62,7 @@
                                             {{ method_field('DELETE') }}
 
                                             <button type="submit" class="btn btn-danger">
-                                                <i class="fa fa-btn fa-trash"></i>Delete
+                                                <i class="fa fa-btn fa-trash"></i>删除任务
                                             </button>
                                         </form>
                                     </td>
@@ -73,6 +73,6 @@
                     </div>
                 </div>
             @endif
-        </div>--}}
+        </div>
     </div>
 @endsection
