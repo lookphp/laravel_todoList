@@ -7,16 +7,27 @@ use Illuminate\Http\Request;
 use App\Todo;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Repositories\TodoRepository;
 
 class TodoController extends Controller
 {
     /**
+     * 任务资源库的实例
+     * @var TodoRepository
+     */
+    protected $todos;
+
+    /**
      * 认证所有的任务路由,让其仅限已认证的用户访问。
      * 使用中间件实现，so easy
+     *
+     * 使用资源库，创建新的控制器实例
      */
-    public function __construct()
+    public function __construct(TodoRepository $todos)
     {
         $this->middleware('auth');
+
+        $this->todos = $todos;
     }
 
     /**
@@ -26,9 +37,8 @@ class TodoController extends Controller
      */
     public function index(Request $request)
     {
-        $todos = Todo::where('user_id',$request->user()->id)->get();
         return view('todos.index',[
-            'todos' => $todos,
+            'todos' => $this->todos->forUser($request->user()),
         ]);
     }
 
@@ -42,6 +52,15 @@ class TodoController extends Controller
         $request->user()->todos()->create([
             'name' => $request->name,
         ]);
+
+        return redirect('/todos');
+    }
+
+    public function destory(Request $request,Todo $todo)
+    {
+        $this->authorize('destory',$todo);
+
+        $todo->delete();
 
         return redirect('/todos');
     }
